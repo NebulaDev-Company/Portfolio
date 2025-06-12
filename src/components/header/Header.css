@@ -1,0 +1,79 @@
+.nebula-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: rgba(29, 27, 63, 0.96);
+  z-index: 100;
+  box-shadow: 0 2px 16px 0 rgba(107,75,190,0.08);
+  backdrop-filter: blur(4px);
+}
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 1px;
+}
+.logo-wrap svg {
+  display: block;
+}
+.company-name {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+}
+nav {
+  display: flex;
+  align-items: center;
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  color: var(--color-text);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color var(--transition);
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width var(--transition);
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+.nav-links a:hover {
+  color: var(--color-primary);
+}
+@media (max-width: 700px) {
+  .header-content {
+    height: 56px;
+  }
+  .nav-links {
+    gap: 16px;
+  }
+  .company-name {
+    font-size: 1rem;
+  }
+} 
