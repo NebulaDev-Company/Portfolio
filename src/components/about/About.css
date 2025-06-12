@@ -101,4 +101,23 @@
     font-size: 1rem;
     padding: 20px;
   }
+}
+
+@media (max-width: 600px) {
+  .about-content h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .about-content p {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  .about-stats .stat-item h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .about-stats .stat-item p {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
 } 

@@ -172,6 +172,26 @@
   .contact-section h2 {
     font-size: 1.3rem;
   }
+  .contact-content h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .contact-info p {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 0.8rem;
+  }
+  .contact-form button {
+    font-size: 0.9rem;
+    padding: 12px 24px;
+  }
+  .contact-info-item h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
   .contact-form,
   .contact-info {
     padding: 24px 16px;

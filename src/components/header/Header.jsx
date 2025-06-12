@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Header.css';
 
 const navLinks = [
@@ -10,6 +10,38 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navLinks.map(link => link.to.substring(1));
+      const currentSection = sections.find(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+      
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
   return (
     <header className="nebula-header">
       <div className="header-content">
@@ -30,11 +62,22 @@ export default function Header() {
           </svg>
           <span className="company-name">Nebula</span>
         </a>
-        <nav>
+        
+        <button className="mobile-menu-btn" onClick={toggleDrawer}>
+          <span className={`hamburger ${isDrawerOpen ? 'open' : ''}`}></span>
+        </button>
+
+        <nav className={`nav-drawer ${isDrawerOpen ? 'open' : ''}`}>
           <ul className="nav-links">
             {navLinks.map(link => (
               <li key={link.to}>
-                <a href={link.to}>{link.label}</a>
+                <a 
+                  href={link.to} 
+                  className={activeSection === link.to.substring(1) ? 'active' : ''}
+                  onClick={closeDrawer}
+                >
+                  {link.label}
+                </a>
               </li>
             ))}
           </ul>

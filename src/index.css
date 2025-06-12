@@ -86,9 +86,27 @@ button:hover {
     padding: 28px 0;
   }
   h1 {
-    font-size: 2rem;
+    font-size: 1.4rem;
+    font-weight: 600;
   }
   h2 {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  h4, h5, h6 {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  p, a {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  button {
+    font-size: 0.9rem;
+    padding: 12px 24px;
   }
 }

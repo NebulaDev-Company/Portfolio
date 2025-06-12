@@ -1,5 +1,5 @@
 
-**🌌 Nebula**
+*🌌 Nebula*
 
 website: https://nebuladev.netlify.app
 

@@ -60,6 +60,7 @@
   0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-18px) scale(1.2); }
 }
+
 .hero-content {
   position: relative;
   z-index: 2;
@@ -98,8 +99,11 @@
   transform: translateY(-2px) scale(1.04);
 }
 @media (max-width: 900px) {
+  .hero-section {
+    min-height: 55vh;
+  }
   .hero-content h1 {
-    font-size: 2rem;
+    font-size: 1.65rem;
   }
   .hero-content {
     padding: 60px 0 40px 0;
@@ -111,10 +115,34 @@
 }
 @media (max-width: 600px) {
   .hero-content h1 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  .hero-content p {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  .hero-buttons button {
+    font-size: 0.9rem;
+    padding: 12px 24px;
   }
   .cta-btn {
     font-size: 1rem;
     padding: 12px 24px;
+  }
+  .hero-bg {
+    background-position: center center;
+    background-size: 200% auto;
+  }
+  .nebula-glow {
+    width: 200px;
+    height: 120px;
+    filter: blur(40px);
+  }
+  .particle {
+    transform: scale(0.7);
+  }
+  .p1, .p2, .p3, .p4, .p5, .p6, .p7, .p8, .p9, .p10, .p11, .p12, .p13 {
+    opacity: 0.6;
   }
 } 

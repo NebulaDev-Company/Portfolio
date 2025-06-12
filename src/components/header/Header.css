@@ -15,6 +15,7 @@
   width: 90%;
   max-width: 1600px;
   margin: 0 auto;
+  position: relative;
 }
 .logo-wrap {
   display: flex;
@@ -24,6 +25,7 @@
   font-weight: 700;
   color: var(--color-primary);
   letter-spacing: 1px;
+  z-index: 101;
 }
 .logo-wrap svg {
   display: block;
@@ -33,6 +35,48 @@
   font-weight: 700;
   font-size: 1.3rem;
   letter-spacing: 2px;
+}
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 101;
+}
+.hamburger {
+  display: block;
+  position: relative;
+  width: 24px;
+  height: 2px;
+  background: var(--color-primary);
+  transition: all 0.3s ease;
+}
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: var(--color-primary);
+  transition: all 0.3s ease;
+}
+.hamburger::before {
+  top: -8px;
+}
+.hamburger::after {
+  bottom: -8px;
+}
+.hamburger.open {
+  background: transparent;
+}
+.hamburger.open::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+.hamburger.open::after {
+  transform: rotate(-45deg);
+  bottom: 0;
 }
 nav {
   display: flex;
@@ -63,18 +107,43 @@ nav {
   left: 0;
   bottom: -4px;
 }
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a.active::after {
   width: 100%;
 }
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: var(--color-primary);
 }
-@media (max-width: 700px) {
-  .header-content {
-    height: 56px;
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+  .nav-drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: rgba(29, 27, 63, 0.98);
+    backdrop-filter: blur(10px);
+    transition: right 0.3s ease;
+    padding: 80px 20px 20px;
+    z-index: 100;
+  }
+  .nav-drawer.open {
+    right: 0;
   }
   .nav-links {
-    gap: 16px;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .nav-links a {
+    font-size: 1.2rem;
+  }
+  .header-content {
+    height: 56px;
   }
   .company-name {
     font-size: 1rem;

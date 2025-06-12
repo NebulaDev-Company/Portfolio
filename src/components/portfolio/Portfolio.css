@@ -1,5 +1,5 @@
 .portfolio-section {
-  padding: 4rem 0;
+  padding: 64px 0;
   /* background-color: #f8f9fa; */
 }
 
@@ -13,23 +13,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
-  gap: 2rem;
-  min-height: 400px;
+  gap: 24px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .portfolio-svg {
-  color: #6B4BBE;
-  opacity: 0.8;
-  height: 600px;
+  width: 300px;
+  height: auto;
+  margin-bottom: 16px;
 }
 
 .portfolio-message p {
-  font-size: 1.5rem;
-  /* color: #333; */
-  max-width: 600px;
-  line-height: 1.6;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  opacity: 0.8;
 }
 
 .portfolio-section h2 {
@@ -106,6 +105,15 @@
   .portfolio-img {
     height: 140px;
   }
+  .portfolio-section h2 {
+    font-size: 1.5rem;
+  }
+  .portfolio-svg {
+    width: 250px;
+  }
+  .portfolio-message p {
+    font-size: 1rem;
+  }
 }
 @media (max-width: 600px) {
   .portfolio-grid {
@@ -113,9 +121,20 @@
     gap: 16px;
   }
   .portfolio-section h2 {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
   }
   .portfolio-img {
     height: 110px;
+  }
+  .portfolio-svg {
+    width: 180px;
+  }
+  .portfolio-message p {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  .portfolio-message {
+    gap: 16px;
   }
 } 
