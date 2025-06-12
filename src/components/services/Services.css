@@ -35,6 +35,34 @@
   align-items: center;
   justify-content: center;
 }
+.service-svg {
+  transition: transform 0.3s ease;
+}
+.service-card:hover .service-svg {
+  transform: scale(1.1);
+}
+.icon-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.5s ease;
+}
+.service-card:hover .icon-path {
+  stroke-dashoffset: 0;
+}
+.service-card:hover .icon-path circle {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 .service-card h3 {
   color: var(--color-accent);
   font-size: 1.2rem;

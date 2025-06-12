@@ -1,6 +1,37 @@
 .portfolio-section {
-  margin: 48px 0;
+  padding: 4rem 0;
+  /* background-color: #f8f9fa; */
 }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.portfolio-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2rem;
+  min-height: 400px;
+}
+
+.portfolio-svg {
+  color: #6B4BBE;
+  opacity: 0.8;
+  height: 600px;
+}
+
+.portfolio-message p {
+  font-size: 1.5rem;
+  /* color: #333; */
+  max-width: 600px;
+  line-height: 1.6;
+}
+
 .portfolio-section h2 {
   text-align: center;
   color: var(--color-primary);

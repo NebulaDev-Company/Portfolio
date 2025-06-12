@@ -7,7 +7,7 @@ export default function About() {
       <div className="container about-content">
         <h2>About Us</h2>
         <p>
-          <strong>Nebula</strong> is a forward-thinking software company dedicated to transforming ideas into digital reality. Our mission is to empower businesses and individuals through innovative, high-quality, and user-centric technology solutions. We believe in pushing creative boundaries, delivering exceptional results, and building lasting partnerships with our clients.
+          <strong>Nebula</strong> is a forward-thinking software company dedicated to transforming ideas into digital reality. Our mission is to empower businesses and individuals through innovative, high-quality, and user-centric technology solutions. We believe in pushing creative boundaries, delivering exceptional results, and building<br/> lasting partnerships with our clients.
         </p>
         <ul className="about-bullets">
           <li>
