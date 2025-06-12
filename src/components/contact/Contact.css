@@ -110,10 +110,20 @@
   border: 1.5px solid var(--color-border);
   padding: 20px;
   transition: transform var(--transition), box-shadow var(--transition);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 .contact-info-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 20px 0 rgba(107,75,190,0.15);
+}
+.contact-info-item.no-link {
+  cursor: default;
+}
+.contact-info-item.no-link:hover {
+  transform: none;
+  box-shadow: 0 2px 16px 0 rgba(107,75,190,0.10);
 }
 .contact-info-icon {
   color: var(--color-primary);
@@ -138,6 +148,12 @@
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.5;
+}
+.error-message {
+  color: #ff4d4f;
+  font-size: 0.9rem;
+  margin: -8px 0 8px;
+  text-align: center;
 }
 @media (max-width: 900px) {
   .contact-flex {
@@ -166,5 +182,51 @@
   }
   .contact-info-icon {
     padding: 8px;
+  }
+}
+
+.success-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-card);
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(107,75,190,0.2);
+  padding: 32px;
+  text-align: center;
+  animation: slideIn 0.3s ease-out;
+  z-index: 1000;
+  border: 1.5px solid var(--color-primary);
+  max-width: 90%;
+  width: 400px;
+}
+
+.success-card svg {
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.success-card h3 {
+  color: var(--color-text);
+  font-size: 1.3rem;
+  margin: 0 0 8px 0;
+}
+
+.success-card p {
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
   }
 } 

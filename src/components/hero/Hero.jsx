@@ -10,7 +10,7 @@ export default function Hero() {
           {[...Array(13)].map((_, i) => <span key={i} className={`particle p${i+1}`}></span>)}
         </div>
       </div>
-      <div className="container hero-content">
+      <div className="hero-content">
         <h1><span className="nebula-gradient">Nebula</span> | Smart Code. Stellar Solutions</h1>
         <a href="#contact" className="cta-btn">Let's Work Together</a>
       </div>

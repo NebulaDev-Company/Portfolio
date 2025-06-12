@@ -12,7 +12,7 @@ const navLinks = [
 export default function Header() {
   return (
     <header className="nebula-header">
-      <div className="container header-content">
+      <div className="header-content">
         <a href="#hero" className="logo-wrap">
           {/* Placeholder Nebula Logo SVG */}
           <svg width="60" height="60" viewBox="0 0 563 563" fill="none" xmlns="http://www.w3.org/2000/svg">
