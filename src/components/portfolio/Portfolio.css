@@ -137,4 +137,27 @@
   .portfolio-message {
     gap: 16px;
   }
+}
+
+.portfolio-btn-blur {
+  display: inline-block;
+  margin-top: 18px;
+  align-self: flex-start;
+  font-size: 0.98rem;
+  padding: 8px 22px;
+  border-radius: 8px;
+  background: rgba(107, 75, 190, 0.18);
+  color: var(--color-primary);
+  font-weight: 600;
+  box-shadow: 0 2px 12px 0 rgba(107,75,190,0.10);
+  border: none;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+}
+.portfolio-btn-blur:hover {
+  background: rgba(143, 111, 230, 0.28);
+  color: var(--color-accent);
+  transform: translateY(-2px) scale(1.04);
 } 
