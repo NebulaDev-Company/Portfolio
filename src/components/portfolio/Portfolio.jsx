@@ -30,7 +30,7 @@ const projects = [
   },
   {
     title: 'Nebula School',
-    url: 'https://nebula-scool.netlify.app/',
+    url: 'https://nebula-school.onrender.com/',
     desc: 'An educational platform to showcase courses and the teaching team with a professional user interface.',
     tech: ['React', 'Education', 'Modern UI'],
     img: school,
