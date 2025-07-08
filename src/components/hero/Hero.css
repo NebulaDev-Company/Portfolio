@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding-top: 72px;
 }
 .hero-bg {
   background-image: url('../../assets/hero-bg.jpg'); 
@@ -113,6 +114,16 @@
     height: 220px;
   }
 }
+
+@media (max-width: 1416px) {
+  .hero-bg {
+    background-size: cover;
+    background-position: top center;
+    position: absolute;
+    top: -120px;
+    left: -100px;
+  }
+}
 @media (max-width: 600px) {
   .hero-content h1 {
     font-size: 1.4rem;
@@ -131,8 +142,8 @@
     padding: 12px 24px;
   }
   .hero-bg {
-    background-position: center center;
-    background-size: 200% auto;
+    background-size: cover;
+    background-position: top center;
   }
   .nebula-glow {
     width: 200px;
@@ -146,3 +157,12 @@
     opacity: 0.6;
   }
 } 
+@media (max-width: 484px) {
+  .hero-bg {
+    background-size: cover;
+    background-position: top center;
+    position: absolute;
+    top: -150px;
+    left: -300px;
+  }
+}

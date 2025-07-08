@@ -84,6 +84,7 @@ button:hover {
 }
 
 @media (max-width: 600px) {
+  
   section {
     padding: 28px 0;
   }

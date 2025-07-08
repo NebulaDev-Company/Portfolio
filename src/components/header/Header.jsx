@@ -12,9 +12,13 @@ const navLinks = [
 export default function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [isHeaderVisible, setIsHeaderVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsHeaderVisible(scrollPosition > 200);
+
       const sections = navLinks.map(link => link.to.substring(1));
       const currentSection = sections.find(section => {
         const element = document.getElementById(section);
@@ -34,6 +38,18 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isDrawerOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isDrawerOpen]);
+
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
@@ -43,7 +59,7 @@ export default function Header() {
   };
 
   return (
-    <header className="nebula-header">
+    <header className={`nebula-header ${isHeaderVisible ? 'visible' : ''}`}>
       <div className="header-content">
         <a href="#hero" className="logo-wrap">
           {/* Placeholder Nebula Logo SVG */}
