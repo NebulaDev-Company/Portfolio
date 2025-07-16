@@ -8,7 +8,7 @@ const contactInfo = [
   {
     type: 'Email',
     value: 'contact.nebuladev@gmail.com',
-    link: 'https://mail.google.com/mail/?view=cm&fs=1&to=contact.nebuladev@gmail.com',
+    link: 'mailto:contact.nebuladev@gmail.com',
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -45,6 +45,11 @@ export default function Contact() {
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const formRef = useRef();
+
+  // دالة تتحقق إذا كان المستخدم على هاتف
+  function isMobile() {
+    return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+  }
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -106,21 +111,30 @@ export default function Contact() {
           
           <div className="contact-right">
             <div className="contact-info">
-              {contactInfo.map(info => (
-                <a 
-                  key={info.type} 
-                  href={info.link} 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`contact-info-item ${!info.link ? 'no-link' : ''}`}
-                >
-                  <div className="contact-info-icon">{info.icon}</div>
-                  <div className="contact-info-content">
-                    <h3>{info.type}</h3>
-                    <p>{info.value}</p>
-                  </div>
-                </a>
-              ))}
+              {contactInfo.map(info => {
+                let link = info.link;
+                // إذا كان الإيميل، غيّر الرابط حسب نوع الجهاز
+                if (info.type === 'Email') {
+                  link = isMobile()
+                    ? 'mailto:contact.nebuladev@gmail.com'
+                    : 'https://mail.google.com/mail/?view=cm&fs=1&to=contact.nebuladev@gmail.com';
+                }
+                return (
+                  <a 
+                    key={info.type} 
+                    href={link} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`contact-info-item ${!link ? 'no-link' : ''}`}
+                  >
+                    <div className="contact-info-icon">{info.icon}</div>
+                    <div className="contact-info-content">
+                      <h3>{info.type}</h3>
+                      <p>{info.value}</p>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
