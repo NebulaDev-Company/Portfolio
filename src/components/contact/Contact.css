@@ -204,6 +204,29 @@
     padding: 8px;
   }
 }
+@media (max-width: 380px) {
+  .contact-info-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    padding: 12px;
+  }
+  .contact-info-icon {
+    padding: 4px;
+    margin-bottom: 4px;
+  }
+  .contact-info-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .contact-info-content h3 {
+    font-size: 0.85rem;
+  }
+  .contact-info-content p {
+    font-size: 0.75rem;
+  }
+}
 
 .success-card {
   position: fixed;
