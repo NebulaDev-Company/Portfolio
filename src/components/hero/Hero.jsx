@@ -1,21 +1,11 @@
-import { useEffect, useRef, useState, Suspense, lazy } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useState, Suspense, lazy } from 'react';
 import TextType from './TextType';
 import './Hero.css';
 
 const LiquidEther = lazy(() => import('./LiquidEther'));
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Hero() {
   const [isDesktop, setIsDesktop] = useState(true);
-  const heroRef = useRef(null);
-  const glowRef = useRef(null);
-  const particlesRef = useRef(null);
-  const contentRef = useRef(null);
-  const parallaxRef = useRef(null);
-  const videoRef = useRef(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 901px)');
@@ -37,179 +27,10 @@ export default function Hero() {
     };
   }, []);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const heroElement = heroRef.current;
-      const videoElement = videoRef.current;
-      const overlayElement = heroElement?.querySelector('.hero-video-overlay');
-
-      if (!heroElement || !videoElement || !overlayElement) {
-        return undefined;
-      }
-
-      const mm = gsap.matchMedia();
-
-      mm.add('(prefers-reduced-motion: reduce), (max-width: 900px)', () => {
-        ScrollTrigger.getAll().forEach((trigger) => {
-          if (trigger.vars?.trigger === heroElement) trigger.kill();
-        });
-
-        gsap.set(
-          [
-            '.hero-kicker',
-            '.hero-heading',
-            '.hero-lead',
-            '.hero-beat',
-            '.hero-chip',
-            '.hero-card',
-            '.cta-btn'
-          ],
-          {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1
-          }
-        );
-
-        gsap.set(videoElement, {
-          clearProps: 'all',
-          scale: 1,
-          opacity: 1
-        });
-
-        gsap.set(overlayElement, { opacity: 0.6 });
-      });
-
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const textSequence = [
-          '.hero-kicker',
-          '.hero-heading',
-          '.hero-lead',
-          '.hero-beat',
-          '.hero-chip',
-          '.hero-card',
-          '.cta-btn'
-        ];
-
-        const cinematicTl = gsap.timeline({
-          defaults: { ease: 'none' },
-          scrollTrigger: {
-            trigger: heroElement,
-            start: 'top top',
-            end: '+=2100',
-            scrub: true,
-            pin: true,
-            anticipatePin: 1
-          }
-        });
-
-        cinematicTl
-          .fromTo(
-            videoElement,
-            { scale: 1.02, opacity: 0.82, yPercent: 0 },
-            { scale: 1.48, opacity: 1, yPercent: 8 },
-            0
-          )
-          .fromTo(
-            overlayElement,
-            { opacity: 0.95 },
-            { opacity: 0.2 },
-            0
-          )
-          .fromTo(
-            '.particle',
-            { autoAlpha: 0, scale: 0.65, y: 10 },
-            { autoAlpha: 0.85, scale: 1, y: 0, stagger: 0.02, duration: 0.25, ease: 'power2.out' },
-            0.18
-          )
-          .fromTo(
-            textSequence,
-            { autoAlpha: 0, y: 56 },
-            { autoAlpha: 1, y: 0, stagger: 0.06, duration: 0.22, ease: 'power2.out' },
-            0.24
-          )
-          .to(
-            contentRef.current,
-            { yPercent: -30, autoAlpha: 0.35, duration: 0.42, ease: 'power1.inOut' },
-            0.82
-          );
-
-        gsap.utils.toArray('.hero-beat').forEach((el, index) => {
-          gsap.fromTo(
-            el,
-            { opacity: 0.6, x: 0 },
-            {
-              opacity: 1,
-              x: 10,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: heroElement,
-                start: `top+=${420 + index * 120} top`,
-                end: `top+=${640 + index * 140} top`,
-                scrub: true
-              }
-            }
-          );
-        });
-
-        const canUseMouseParallax = window.matchMedia('(pointer: fine) and (min-width: 901px)').matches;
-
-        if (!canUseMouseParallax) {
-          return undefined;
-        }
-
-        const xToGlow = gsap.quickTo(glowRef.current, "x", { duration: 0.8, ease: "power3.out" });
-        const yToGlow = gsap.quickTo(glowRef.current, "y", { duration: 0.8, ease: "power3.out" });
-        const xToParticles = gsap.quickTo(particlesRef.current, "x", { duration: 0.85, ease: "power3.out" });
-        const yToParticles = gsap.quickTo(particlesRef.current, "y", { duration: 0.85, ease: "power3.out" });
-        const xToParallax = gsap.quickTo(parallaxRef.current, "x", { duration: 0.8, ease: "power2.out" });
-        const yToParallax = gsap.quickTo(parallaxRef.current, "y", { duration: 0.8, ease: "power2.out" });
-
-        const onMouseMove = (event) => {
-          const { left, top, width, height } = heroElement.getBoundingClientRect();
-          const x = (event.clientX - left) / width - 0.5;
-          const y = (event.clientY - top) / height - 0.5;
-
-          xToGlow(x * 18);
-          yToGlow(y * 12);
-          xToParticles(x * 10);
-          yToParticles(y * 7);
-          xToParallax(x * -7);
-          yToParallax(y * -5);
-        };
-
-        const onMouseLeave = () => {
-          xToGlow(0);
-          yToGlow(0);
-          xToParticles(0);
-          yToParticles(0);
-          xToParallax(0);
-          yToParallax(0);
-        };
-
-        heroElement.addEventListener('mousemove', onMouseMove);
-        heroElement.addEventListener('mouseleave', onMouseLeave);
-
-        return () => {
-          heroElement.removeEventListener('mousemove', onMouseMove);
-          heroElement.removeEventListener('mouseleave', onMouseLeave);
-          ScrollTrigger.getAll().forEach((trigger) => {
-            if (trigger.vars?.trigger === heroElement) trigger.kill();
-          });
-        };
-      });
-
-      return () => mm.revert();
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section id="hero" className="hero-section" ref={heroRef}>
+    <section id="hero" className="hero-section">
       <div className="hero-bg">
         <video
-          ref={videoRef}
           className="hero-video"
           autoPlay
           muted
@@ -248,13 +69,13 @@ export default function Hero() {
           )}
         </div>
         <div className="hero-video-overlay" aria-hidden="true"></div>
-        <div className="nebula-glow" ref={glowRef}></div>
-        <div className="particles" ref={particlesRef}>
+        <div className="nebula-glow"></div>
+        <div className="particles">
           {[...Array(13)].map((_, i) => <span key={i} className={`particle p${i+1}`}></span>)}
         </div>
       </div>
-      <div className="hero-content" ref={contentRef}>
-        <div className="hero-parallax-layer" ref={parallaxRef}>
+      <div className="hero-content">
+        <div className="hero-parallax-layer">
           <p className="hero-kicker">SHAPING THE DIGITAL FRONTIER</p>
           <h1 className="hero-heading">
             <span className="nebula-gradient">Nebula</span> |{' '}
