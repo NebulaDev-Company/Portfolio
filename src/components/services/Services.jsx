@@ -1,4 +1,5 @@
 import React from 'react';
+import ScrollFloat from '../ScrollFloat/ScrollFloat';
 import './Services.css';
 
 const services = [
@@ -110,7 +111,15 @@ export default function Services() {
   return (
     <section id="services" className="services-section">
       <div className="container">
-        <h2>Our Services</h2>
+        <ScrollFloat
+          animationDuration={1}
+          ease='back.inOut(2)'
+          scrollStart='center bottom+=50%'
+          scrollEnd='bottom bottom-=40%'
+          stagger={0.03}
+        >
+          Our Services
+        </ScrollFloat>
         <div className="services-grid">
           {services.map((service, i) => (
             <div className="service-card" key={i}>

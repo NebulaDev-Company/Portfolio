@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import ScrollFloat from '../ScrollFloat/ScrollFloat';
 import './Contact.css';
 
 
@@ -85,7 +86,15 @@ export default function Contact() {
   return (
     <section id="contact" className="contact-section">
       <div className="container contact-content">
-        <h2>Contact Us</h2>
+        <ScrollFloat
+          animationDuration={1}
+          ease='back.inOut(2)'
+          scrollStart='center bottom+=50%'
+          scrollEnd='bottom bottom-=40%'
+          stagger={0.03}
+        >
+          Contact Us
+        </ScrollFloat>
         <div className="contact-flex">
           <div className="contact-left">
             <form ref={formRef} className="contact-form" onSubmit={handleSubmit} autoComplete="off">

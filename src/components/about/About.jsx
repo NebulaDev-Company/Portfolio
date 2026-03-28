@@ -1,11 +1,20 @@
 import React from 'react';
+import ScrollFloat from '../ScrollFloat/ScrollFloat';
 import './About.css';
 
 export default function About() {
   return (
     <section id="about" className="about-section">
       <div className="container about-content">
-        <h2>About Us</h2>
+        <ScrollFloat
+          animationDuration={1}
+          ease='back.inOut(2)'
+          scrollStart='center bottom+=50%'
+          scrollEnd='bottom bottom-=40%'
+          stagger={0.03}
+        >
+          About Us
+        </ScrollFloat>
         <p>
           <strong>Nebula</strong> is a forward-thinking software company dedicated to transforming ideas into digital reality. Our mission is to empower businesses and individuals through innovative, high-quality, and user-centric technology solutions. We believe in pushing creative boundaries, delivering exceptional results, and building<br/> lasting partnerships with our clients.
         </p>

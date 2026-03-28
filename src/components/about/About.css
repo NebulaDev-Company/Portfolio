@@ -28,8 +28,8 @@
 
 .about-content p {
   font-size: 1.2rem;
-  color: var(--color-text);
-  opacity: 0.5;
+  color: #f3f3f776;
+  /* opacity: 0.5; */
   margin-bottom: 40px;
   line-height: 1.8;
   max-width: 800px;
@@ -38,7 +38,9 @@
 }
 .about-content p strong {
   color: var(--color-accent);
-  font-weight: 600;
+  opacity: 0.5;
+
+  /* font-weight: 900; */
 }
 .about-bullets {
   list-style: none;

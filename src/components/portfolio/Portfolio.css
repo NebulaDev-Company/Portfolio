@@ -45,6 +45,9 @@
   margin: 0 auto;
 }
 .portfolio-card {
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
   background: var(--color-card);
   border-radius: 14px;
   box-shadow: 0 2px 16px 0 rgba(107,75,190,0.10);
@@ -161,3 +164,30 @@
   color: var(--color-accent);
   transform: translateY(-2px) scale(1.04);
 } 
+.portfolio-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.portfolio-badge.client {
+  background: rgba(22, 100, 56, 0.45);
+  color: #a8f0c6;
+  border-color: rgba(46, 204, 113, 0.4);
+}
+
+.portfolio-badge.concept {
+  background: rgba(43, 33, 69, 0.55);
+  color: #e0d4ff;
+  border-color: rgba(143, 111, 230, 0.4);
+}
