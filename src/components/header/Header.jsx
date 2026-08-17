@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
+import Icon from '../Icon';
+import Logo from '../Logo';
 import './Header.css';
 
 const navLinks = [
   { label: 'Home', to: '#hero' },
   { label: 'About', to: '#about' },
   { label: 'Services', to: '#services' },
-  { label: 'Portfolio', to: '#portfolio' },
+  { label: 'Work', to: '#portfolio' },
   { label: 'Contact', to: '#contact' },
 ];
 
 export default function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [isHeaderVisible, setIsHeaderVisible] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const sectionIds = navLinks.map(link => link.to.substring(1));
@@ -20,111 +22,108 @@ export default function Header() {
       .map(sectionId => document.getElementById(sectionId))
       .filter(Boolean);
 
-    const sentinel = document.getElementById('hero-scroll-sentinel');
-    const cleanup = [];
-
-    if (sentinel) {
-      const headerObserver = new IntersectionObserver(
-        ([entry]) => {
-          setIsHeaderVisible(!entry.isIntersecting);
-        },
-        {
-          threshold: 0,
-          rootMargin: '-200px 0px 0px 0px'
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        const activeEntry = entries.find(entry => entry.isIntersecting);
+        if (activeEntry) {
+          setActiveSection(prev => (prev !== activeEntry.target.id ? activeEntry.target.id : prev));
         }
-      );
+      },
+      { threshold: 0, rootMargin: '-45% 0px -45% 0px' }
+    );
 
-      headerObserver.observe(sentinel);
-      cleanup.push(() => headerObserver.disconnect());
-    }
+    sections.forEach(section => sectionObserver.observe(section));
 
-    if (sections.length > 0) {
-      const sectionObserver = new IntersectionObserver(
-        (entries) => {
-          const activeEntry = entries.find(entry => entry.isIntersecting);
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
 
-          if (activeEntry) {
-            setActiveSection(prev => (prev !== activeEntry.target.id ? activeEntry.target.id : prev));
-          }
-        },
-        {
-          threshold: 0,
-          rootMargin: '-45% 0px -45% 0px'
-        }
-      );
-
-      sections.forEach(section => sectionObserver.observe(section));
-      cleanup.push(() => sectionObserver.disconnect());
-    }
-
-    setIsHeaderVisible(window.scrollY > 200);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
-      cleanup.forEach(disconnect => disconnect());
+      sectionObserver.disconnect();
+      window.removeEventListener('scroll', onScroll);
     };
   }, []);
 
   useEffect(() => {
-    if (isDrawerOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = isDrawerOpen ? 'hidden' : '';
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setIsDrawerOpen(false);
+    };
+
+    if (isDrawerOpen) document.addEventListener('keydown', onKeyDown);
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKeyDown);
     };
   }, [isDrawerOpen]);
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
-
-  const closeDrawer = () => {
-    setIsDrawerOpen(false);
-  };
+  const toggleDrawer = () => setIsDrawerOpen(prev => !prev);
+  const closeDrawer = () => setIsDrawerOpen(false);
 
   return (
-    <header className={`nebula-header ${isHeaderVisible ? 'visible' : ''}`}>
+    <header className={`nebula-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="header-content">
-        <a href="#hero" className="logo-wrap">
-          {/* Placeholder Nebula Logo SVG */}
-          <svg width="60" height="60" viewBox="0 0 563 563" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M425.241 78H483.015C485.776 78 488.015 80.2386 488.015 83V246.473C488.015 248.325 485.716 249.182 484.504 247.783L425.241 179.404V78Z" fill="#5B0E8C"/>
-            <path d="M425.241 78V140.774H386.612L327.252 81.4142C325.992 80.1543 326.885 78 328.666 78H425.241Z" fill="#5B0E8C"/>
-            <path d="M147 78C149.761 78 152 80.2386 152 83V421H188.477L247.617 480.591C248.87 481.853 247.975 484 246.197 484H72C69.2386 484 67 481.761 67 479V84C67 80.6863 69.6863 78 73 78H147Z" fill="url(#paint0_linear_20_2)"/>
-            <path d="M67.4335 84.511C67.1528 84.1574 66.9901 83.7173 67.0289 83.2674C67.231 80.9248 68.4727 79.8569 70.0654 78.8623C70.994 78.2824 72.0787 78 73.1735 78H163.027C164.541 78 165.973 78.6859 166.922 79.8653L487.201 477.865C489.833 481.137 487.505 486 483.305 486H386.123L67.4335 84.511Z" fill="#5B0E8C"/>
-            <path d="M483 78C485.761 78.0001 488 80.2387 488 83V246.649C488 248.499 485.704 249.357 484.49 247.961L425 179.5V140.773H386.611L327.252 81.4141C325.992 80.1542 326.884 78.0001 328.666 78H483Z" fill="#5B0E8C"/>
-            <defs>
-              <linearGradient id="paint0_linear_20_2" x1="105.263" y1="78" x2="109.426" y2="484.003" gradientUnits="userSpaceOnUse">
-              <stop offset="0.159034" stop-color="#420767"/>
-              <stop offset="1" stop-color="#6C2DC7"/>
-              </linearGradient>
-            </defs>
-          </svg>
+        <a href="#hero" className="logo-wrap" aria-label="Nebula home">
+          <Logo />
           <span className="company-name">Nebula</span>
         </a>
-        
-        <button className="mobile-menu-btn" onClick={toggleDrawer}>
-          <span className={`hamburger ${isDrawerOpen ? 'open' : ''}`}></span>
-        </button>
 
-        <nav className={`nav-drawer ${isDrawerOpen ? 'open' : ''}`}>
+        <nav className="header-nav" aria-label="Primary">
           <ul className="nav-links">
             {navLinks.map(link => (
               <li key={link.to}>
-                <a 
-                  href={link.to} 
+                <a
+                  href={link.to}
                   className={activeSection === link.to.substring(1) ? 'active' : ''}
-                  onClick={closeDrawer}
                 >
                   {link.label}
                 </a>
               </li>
             ))}
           </ul>
+          <a href="#contact" className="btn btn-primary btn-sm header-cta">
+            Start a project
+          </a>
         </nav>
+
+        <button
+          className="mobile-menu-btn"
+          onClick={toggleDrawer}
+          aria-label={isDrawerOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isDrawerOpen}
+          aria-controls="mobile-menu"
+        >
+          <Icon name={isDrawerOpen ? 'close' : 'menu'} size={24} strokeWidth={1.75} />
+        </button>
+      </div>
+
+      <div
+        id="mobile-menu"
+        className={`mobile-menu ${isDrawerOpen ? 'open' : ''}`}
+        aria-hidden={!isDrawerOpen}
+      >
+        <nav aria-label="Mobile">
+          <ul className="mobile-nav-links">
+            {navLinks.map((link, i) => (
+              <li key={link.to} style={{ '--stagger': i }}>
+                <a href={link.to} onClick={closeDrawer}>
+                  <span className="mobile-nav-index">0{i + 1}</span>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="mobile-menu-footer">
+          <a href="#contact" className="btn btn-primary btn-lg" onClick={closeDrawer}>
+            Start a project
+          </a>
+          <p className="mobile-menu-email">contact.nebuladev@gmail.com</p>
+        </div>
       </div>
     </header>
   );
-} 
+}

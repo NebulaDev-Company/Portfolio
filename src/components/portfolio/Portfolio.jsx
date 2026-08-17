@@ -1,32 +1,27 @@
-import { useRef } from 'react'
-import ScrollFloat from '../ScrollFloat/ScrollFloat';
-import useDeferredGsapReveal from '../../hooks/useDeferredGsapReveal'
+import useReveal from '../../hooks/useReveal';
+import Icon from '../Icon';
 import './Portfolio.css';
-import portfolio from '../../assets/Webs/portfolio.png';
+import portfolioImg from '../../assets/Webs/portfolio.png';
 import elegant from '../../assets/Webs/elegant.png';
 import school from '../../assets/Webs/school.png';
 import tomato from '../../assets/Webs/tomato.png';
 import medical from '../../assets/Webs/medical.png';
 import habit from '../../assets/Webs/habit.png';
-import Academix from '../../assets/Webs/academix.png';
-
-
-
-
+import academix from '../../assets/Webs/academix.png';
 
 const projects = [
   {
     title: 'Personal Portfolio',
     url: 'https://yacine-portfoloi.netlify.app/',
-    desc: 'A professional personal website showcasing my resume, skills, and projects in a modern and attractive way.',
+    desc: 'A professional personal website presenting a resume, skills, and projects.',
     tech: ['Flutter', 'Dart', 'Responsive'],
-    img: portfolio,
+    img: portfolioImg,
     type: 'concept',
   },
   {
     title: 'Tomato Restaurant',
     url: 'https://restaurant-frontend-x0b2.onrender.com/',
-    desc: 'A modern restaurant platform to display the menu and order food online with a smooth user experience.',
+    desc: 'A modern restaurant platform for displaying the menu and ordering online.',
     tech: ['React', 'Tailwind', 'Food UI'],
     img: tomato,
     type: 'concept',
@@ -34,14 +29,15 @@ const projects = [
   {
     title: 'Elegant Fashion',
     url: 'https://elegant-fashion.netlify.app/',
-    desc: 'An e-commerce website for trendy fashion with premium services and an elegant shopping experience.',
+    desc: 'An e-commerce experience for premium fashion with a refined shopping flow.',
     tech: ['React', 'E-commerce', 'CSS'],
     img: elegant,
+    type: 'concept',
   },
   {
     title: 'Nebula School',
     url: 'https://nebula-school.onrender.com/',
-    desc: 'An educational platform to showcase courses and the teaching team with a professional user interface.',
+    desc: 'An educational platform for showcasing courses and the teaching team.',
     tech: ['React', 'Education', 'Modern UI'],
     img: school,
     type: 'concept',
@@ -49,7 +45,7 @@ const projects = [
   {
     title: 'Habit Tracker',
     url: 'https://habit-tracker-nebula.netlify.app/',
-    desc: 'A simple, offline, open-source tool to track your daily habits. Check off your tasks, visualize your progress with charts, and improve your routine. No accounts, no subscriptions, no data collection.',
+    desc: 'An offline, open-source PWA for tracking daily habits no accounts, no subscriptions.',
     tech: ['PWA', 'Habit', 'Modern UI'],
     img: habit,
     type: 'client',
@@ -57,61 +53,87 @@ const projects = [
   {
     title: 'Medical QCM Platform',
     url: 'https://medical-platform-qcm.netlify.app/',
-    desc: 'Master your medical MCQs efficiently Access thousands of questions by specialty and level. Track progress, save favorites, and study even offline.',
+    desc: 'A study platform with thousands of medical MCQs by specialty, even offline.',
     tech: ['Responsive', 'MERN', 'PWA'],
     img: medical,
     type: 'client',
   },
-  {
-    title: 'Academix',
-    url: 'https://academix-os.netlify.app/en',
-    desc: 'the modern operating system for your school. From attendance to grades, from fees to parent communication — everything in one elegant platform. Built for schools that refuse to compromise on quality.',
-    tech: ['Education', 'Next js', 'PWA'],
-    img: Academix,
-    type: 'client',
-  },
 ];
 
-export default function Portfolio() {
-  const sectionRef = useRef(null)
+const featured = {
+  title: 'Academix',
+  url: 'https://academix-os.netlify.app/en',
+  desc: 'The operating system for modern schools attendance, grades, fees, and parent communication in one elegant platform.',
+  tech: ['Education', 'Next.js', 'PWA'],
+  img: academix,
+  type: 'client',
+};
 
-  useDeferredGsapReveal({
-    rootRef: sectionRef,
-    selectors: ['.portfolio-section h2', '.portfolio-card']
-  })
+function ProjectCard({ project, className = '' }) {
+  return (
+    <a
+      href={project.url}
+      className={`project-card ${className}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <div className="project-media">
+        <img
+          src={project.img}
+          alt={`${project.title} project screenshot`}
+          loading="lazy"
+          decoding="async"
+          fetchPriority={className ? 'high' : 'low'}
+        />
+      </div>
+      <div className="project-body">
+        <div className="project-title-row">
+          <h3 className="project-title">{project.title}</h3>
+          <span className="project-arrow">
+            <Icon name="arrowUpRight" size={18} strokeWidth={2} />
+          </span>
+        </div>
+        <p className="project-desc">{project.desc}</p>
+        <div className="project-meta">
+          <span className={`project-tag ${project.type}`}>
+            {project.type === 'client' ? 'Client' : 'Concept'}
+          </span>
+          <div className="project-tech">
+            {project.tech.map((t) => (
+              <span key={t}>{t}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+export default function Portfolio() {
+  const sectionRef = useReveal();
 
   return (
-    <section id="portfolio" className="portfolio-section" ref={sectionRef}>
+    <section id="portfolio" className="section portfolio-section" ref={sectionRef}>
       <div className="container">
-        <ScrollFloat
-          animationDuration={1}
-          ease='back.inOut(2)'
-          scrollStart='center bottom+=50%'
-          scrollEnd='bottom bottom-=40%'
-          stagger={0.03}
-        >
-          Portfolio
-        </ScrollFloat>
+        <div className="portfolio-head" data-reveal>
+          <div>
+            <p className="eyebrow">Work</p>
+            <h2 className="h2">Selected projects</h2>
+          </div>
+          <p className="portfolio-intro">
+            A selection of platforms and products we&apos;ve designed and built for
+            clients, teams, and our own research.
+          </p>
+        </div>
+
         <div className="portfolio-grid">
+          <ProjectCard project={featured} className="project-featured" />
+
           {projects.map((project) => (
-            <a href={project.url} className="portfolio-card" key={project.title} target="_blank" rel="noopener noreferrer">
-              <div className={`portfolio-badge ${project.type}`}>
-                {project.type === 'client' ? 'Real Client' : 'Concept Project'}
-              </div>
-              <img src={project.img} alt={project.title} className="portfolio-img" loading="lazy" decoding="async" fetchPriority="low" />
-              <div className="portfolio-info">
-                <h3>{project.title}</h3>
-                <p>{project.desc}</p>
-                <div className="portfolio-tech">
-                  {project.tech.map((t, idx) => (
-                    <span key={idx}>{t}</span>
-                  ))}
-                </div>
-              </div>
-            </a>
+            <ProjectCard project={project} key={project.title} />
           ))}
         </div>
       </div>
     </section>
   );
-} 
+}

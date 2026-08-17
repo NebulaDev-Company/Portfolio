@@ -1,61 +1,62 @@
-import { useRef } from 'react'
-import ScrollFloat from '../ScrollFloat/ScrollFloat';
-import useDeferredGsapReveal from '../../hooks/useDeferredGsapReveal'
+import useReveal from '../../hooks/useReveal';
+import Icon from '../Icon';
 import './About.css';
 
-export default function About() {
-  const sectionRef = useRef(null)
+const values = [
+  {
+    icon: 'layers',
+    title: 'Creativity',
+    desc: 'We craft unique, future-ready solutions rather than reusing templates.',
+  },
+  {
+    icon: 'shieldCheck',
+    title: 'Quality',
+    desc: 'We uphold high standards in every project, from architecture to pixels.',
+  },
+  {
+    icon: 'users',
+    title: 'Client-focused',
+    desc: 'Your vision is at the heart of our development process not the other way around.',
+  },
+];
 
-  useDeferredGsapReveal({
-    rootRef: sectionRef,
-    selectors: ['.about-content h2', '.about-content p', '.about-bullets li']
-  })
+export default function About() {
+  const sectionRef = useReveal();
 
   return (
-    <section id="about" className="about-section" ref={sectionRef}>
-      <div className="container about-content">
-        <ScrollFloat
-          animationDuration={1}
-          ease='back.inOut(2)'
-          scrollStart='center bottom+=50%'
-          scrollEnd='bottom bottom-=40%'
-          stagger={0.03}
-        >
-          About Us
-        </ScrollFloat>
-        <p>
-          <strong>Nebula</strong> is a forward-thinking software company dedicated to transforming ideas into digital reality. Our mission is to empower businesses and individuals through innovative, high-quality, and user-centric technology solutions. We believe in pushing creative boundaries, delivering exceptional results, and building<br/> lasting partnerships with our clients.
-        </p>
-        <ul className="about-bullets">
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-            <div>
-              <strong>Creativity:</strong> We craft unique, future-ready solutions.
-            </div>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 6L9 17l-5-5"/>
-            </svg>
-            <div>
-              <strong>Quality:</strong> We uphold the highest standards in every project.
-            </div>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-            <div>
-              <strong>Client-Focused:</strong> Your vision is at the heart of our development process.
-            </div>
-          </li>
-        </ul>
+    <section id="about" className="section about-section" ref={sectionRef}>
+      <div className="container about-grid">
+        <div className="about-intro" data-reveal>
+          <p className="eyebrow">About</p>
+          <h2 className="h2 about-title">
+            A software company built around craft and long-term thinking.
+          </h2>
+        </div>
+
+        <div className="about-body">
+          <p className="body-lg" data-reveal>
+            <strong className="about-name">Nebula</strong> is a software company
+            dedicated to turning ideas into reliable digital products. We design,
+            build, and maintain web platforms, applications, and business systems —
+            working closely with our clients to deliver solutions that are
+            high-quality, user-centric, and built to last.
+          </p>
+
+          <ul className="about-values" data-reveal>
+            {values.map((value) => (
+              <li key={value.title} className="about-value">
+                <span className="about-value-icon">
+                  <Icon name={value.icon} size={18} strokeWidth={1.75} />
+                </span>
+                <div>
+                  <h3 className="about-value-title">{value.title}</h3>
+                  <p className="about-value-desc">{value.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );
-} 
+}

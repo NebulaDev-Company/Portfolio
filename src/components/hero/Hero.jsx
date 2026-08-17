@@ -1,153 +1,84 @@
-import { useEffect, useState, Suspense, lazy } from 'react';
-import TextType from './TextType';
+import { useEffect, useRef } from 'react';
+import Icon from '../Icon';
+import Academix from '../../assets/Webs/academix.png';
 import './Hero.css';
 
-const LiquidEther = lazy(() => import('./LiquidEther'));
-
 export default function Hero() {
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window === 'undefined') {
-      return true;
-    }
-
-    return window.matchMedia('(min-width: 901px)').matches;
-  });
-  const [shouldRenderLiquid, setShouldRenderLiquid] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 901px)');
-    setIsDesktop(mediaQuery.matches);
-    
-    const handleMediaChange = (e) => setIsDesktop(e.matches);
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleMediaChange);
-    } else {
-      mediaQuery.addListener(handleMediaChange);
-    }
+    const section = sectionRef.current;
+    if (!section) return undefined;
 
-    return () => {
-      if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', handleMediaChange);
-      } else {
-        mediaQuery.removeListener(handleMediaChange);
-      }
-    };
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return undefined;
+
+    const nodes = section.querySelectorAll('[data-hero-enter]');
+    nodes.forEach((node) => node.classList.add('hero-enter'));
+
+    return undefined;
   }, []);
 
-  useEffect(() => {
-    if (!isDesktop) {
-      setShouldRenderLiquid(false);
-      return undefined;
-    }
-
-    let cancelled = false;
-
-    const scheduleLiquid = window.requestIdleCallback
-      ? (task) => window.requestIdleCallback(task, { timeout: 1200 })
-      : (task) => window.setTimeout(task, 120);
-
-    const cancelLiquid = window.cancelIdleCallback
-      ? (id) => window.cancelIdleCallback(id)
-      : (id) => window.clearTimeout(id);
-
-    const idleId = scheduleLiquid(() => {
-      if (!cancelled) {
-        setShouldRenderLiquid(true);
-      }
-    });
-
-    return () => {
-      cancelled = true;
-      cancelLiquid(idleId);
-    };
-  }, [isDesktop]);
-
   return (
-    <section id="hero" className="hero-section">
-      <div className="hero-bg">
-        <video
-          className="hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        >
-          <source src="/assets/videos/nebula-mobile.mp4" media="(max-width: 900px)" type="video/mp4" />
-          <source src="/assets/videos/nebula.mp4" type="video/mp4" />
-        </video>
-        <div className="hero-liquid" aria-hidden="true">
-          {isDesktop && shouldRenderLiquid && (
-            <Suspense fallback={null}>
-              <LiquidEther
-                colors={['#5227FF', '#FF9FFC', '#B19EEF']}
-                mouseForce={15}
-                cursorSize={70}
-                isViscous
-                viscous={30}
-                iterationsViscous={12}
-                iterationsPoisson={12}
-                resolution={0.25}
-                isBounce={false}
-                autoDemo
-                autoSpeed={0.5}
-                autoIntensity={2.2}
-                takeoverDuration={0.25}
-                autoResumeDelay={3000}
-                autoRampDuration={0.6}
-                color0="#5227ff"
-                color1="#9141ac"
-                color2="#B19EEF"
-              />
-            </Suspense>
-          )}
-        </div>
-        <div className="hero-video-overlay" aria-hidden="true"></div>
-        <div className="nebula-glow"></div>
-        <div className="particles">
-          {[...Array(13)].map((_, i) => <span key={i} className={`particle p${i+1}`}></span>)}
-        </div>
-      </div>
-      <div className="hero-content">
-        <div className="hero-parallax-layer">
-          <p className="hero-kicker">SHAPING THE DIGITAL FRONTIER</p>
-          <h1 className="hero-heading">
-            <span className="nebula-gradient">Nebula</span> |{' '}
-            <TextType 
-              as="span"
-              text={["Smart Code","Stellar Solutions"]}
-              typingSpeed={75}
-              pauseDuration={1500}
-              showCursor
-              cursorCharacter="_"
-              deletingSpeed={50}
-              variableSpeed={{ min: 60, max: 120 }}
-              cursorBlinkDuration={0.5}
-            />
+    <section id="hero" className="hero-section" ref={sectionRef}>
+      <div className="container">
+        <div className="hero-content">
+          <p className="eyebrow hero-eyebrow" data-hero-enter>
+            <span className="hero-eyebrow-dot" aria-hidden="true" />
+            Software design &amp; engineering
+          </p>
+
+          <h1 className="display hero-title" data-hero-enter>
+            Smart code.
+            <br />
+            Stellar<span className="hero-accent"> solutions.</span>
           </h1>
-          <p className="hero-lead">We transform visionary ideas into high-performance digital ecosystems that captivate users and drive real growth.</p>
 
-          <div className="hero-story-beats" aria-label="Hero story highlights">
-            <p className="hero-beat">Crafting intuitive and immersive brand experiences.</p>
-            <p className="hero-beat">Engineering scalable, future-proof architectures.</p>
-            <p className="hero-beat">Accelerating business growth through digital innovation.</p>
+          <p className="lead hero-lead" data-hero-enter>
+            Nebula designs and builds digital products businesses rely on web
+            platforms, applications, and internal systems. From first sketch to
+            production, engineered with precision.
+          </p>
+
+          <div className="hero-actions" data-hero-enter>
+            <a href="#contact" className="btn btn-primary btn-lg">
+              Start a project
+            </a>
+            <a href="#portfolio" className="btn btn-secondary btn-lg">
+              View our work
+            </a>
           </div>
+        </div>
 
-          <div className="hero-chips">
-            <span className="hero-chip">Digital Strategy</span>
-            <span className="hero-chip">Creative Design</span>
-            <span className="hero-chip">Advanced Engineering</span>
+        <div className="hero-visual" data-hero-enter>
+          <div className="browser-frame" role="img" aria-label="Screenshot of the Academix school management platform built by Nebula">
+            <div className="browser-chrome" aria-hidden="true">
+              <span className="browser-dot" />
+              <span className="browser-dot" />
+              <span className="browser-dot" />
+              <span className="browser-url">academix-os.netlify.app</span>
+            </div>
+            <div className="browser-body">
+              <img
+                src={Academix}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                fetchPriority="high"
+              />
+            </div>
           </div>
-
-          <div className="hero-card">
-            <strong>Elevate Your Brand</strong>
-            <p>Partner with a team dedicated to pushing the boundaries of what is possible on the web. Your vision, expertly realized.</p>
-          </div>
-
-          <a href="#contact" className="cta-btn">Let's Work Together</a>
+          <a
+            className="hero-visual-caption"
+            href="https://academix-os.netlify.app/en"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="external" size={14} />
+            Academix - school management platform
+          </a>
         </div>
       </div>
     </section>
   );
-} 
+}
